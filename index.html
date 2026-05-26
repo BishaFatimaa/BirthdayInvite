@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Invited — Birthday & Graduation Bash 🎓🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Particle canvas -->
+  <canvas id="particles"></canvas>
+
+  <!-- Floating ambient icons -->
+  <div class="ambient-icons" id="ambientIcons"></div>
+
+  <!-- ===== ENVELOPE SECTION ===== -->
+  <section class="envelope-section" id="envelopeSection">
+    <div class="pre-open-text">
+      <p class="tap-hint">tap the envelope to open your invitation</p>
+      <div class="wax-seal-hint">✦</div>
+    </div>
+
+    <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+      <div class="envelope" id="envelope">
+        <!-- Back flap (behind) -->
+        <div class="env-back"></div>
+        <!-- Side triangles -->
+        <div class="env-left"></div>
+        <div class="env-right"></div>
+        <div class="env-bottom"></div>
+        <!-- Flap top -->
+        <div class="env-flap" id="envFlap"></div>
+        <!-- Letter inside -->
+        <div class="env-letter" id="envLetter">
+          <span class="letter-inner">You're<br/>Invited</span>
+        </div>
+        <!-- Wax seal -->
+        <div class="wax-seal" id="waxSeal">
+          <span>✦</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MAIN INVITE ===== -->
+  <main class="invite-main" id="inviteMain">
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-top-deco">
+        <span class="deco-line"></span>
+        <span class="deco-star">✦</span>
+        <span class="deco-line"></span>
+      </div>
+
+      <div class="floating-icons-hero">
+        <div class="icon-btn cap-icon" id="capIcon" title="Click me!" onclick="triggerCapAnimation()">🎓</div>
+        <div class="icon-btn cake-icon" id="cakeIcon" title="Click me!" onclick="triggerCakeAnimation()">🎂</div>
+        <div class="icon-btn star-icon" id="starIcon" title="Click me!" onclick="triggerStarAnimation()">✨</div>
+      </div>
+
+      <div class="hero-eyebrow">— Celebrating Bisha's—</div>
+
+      <h1 class="hero-title">
+        <span class="title-line big">Birthday</span>
+        <span class="title-amp">&amp;</span>
+        <span class="title-line big">Graduation</span>
+      </h1>
+
+      <div class="hero-sub">
+        <span class="name-reveal">I would Love to have you there!</span>
+      </div>
+
+      <div class="hero-bottom-deco">
+        <span class="deco-line"></span>
+        <span class="deco-diamond">◆</span>
+        <span class="deco-line"></span>
+      </div>
+    </header>
+
+    <!-- Details Card -->
+    <section class="details-section">
+      <div class="details-card">
+        <div class="details-grid">
+          <div class="detail-item" onclick="pulseDetail(this)">
+            <div class="detail-icon">📅</div>
+            <div class="detail-label">Date</div>
+            <div class="detail-value">Wednesday<br/><strong>May 27, 2026</strong></div>
+          </div>
+          <div class="detail-divider">◆</div>
+          <div class="detail-item" onclick="pulseDetail(this)">
+            <div class="detail-icon">⏰</div>
+            <div class="detail-label">Time</div>
+            <div class="detail-value">Starting at<br/><strong>5:30 PM</strong></div>
+          </div>
+          <div class="detail-divider">◆</div>
+          <div class="detail-item" onclick="pulseDetail(this)">
+            <div class="detail-icon">🥂</div>
+            <div class="detail-label">Dress Code</div>
+            <div class="detail-value">Red,Black and Brown<br/><strong>Night Life Glitters</strong></div>
+          </div>
+        </div>
+
+        <div class="location-row">
+          <div class="location-icon">📍</div>
+          <div class="location-text">
+            <div class="location-label">Location</div>
+            <div class="location-value">350 Coloumbia Street West, Unit 147</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section
+    <section class="about-section">
+      <div class="about-inner">
+        <div class="about-deco-left">
+          <div class="vertical-text">CELEBRATE</div>
+        </div>
+        <div class="about-content">
+          <h2 class="about-heading">Two milestones.<br/><em>One unforgettable night.</em></h2>
+          <p class="about-body">
+            It's time to raise a glass — because we're celebrating not one, but <strong>two</strong> monumental moments. Another year around the sun and a hard-earned diploma. 
+            Come ready to eat, dance, and make memories that will last far longer than any degree.
+          </p>
+          <div class="about-tags">
+            <span class="tag">🎓 Graduated</span>
+            <span class="tag">🎂 Turning Up</span>
+            <span class="tag">🥂 Vibes Only</span>
+          </div>
+        </div>
+        <div class="about-deco-right">
+          <div class="vertical-text">2026</div>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Interactive Icons Section -->
+    <section class="icons-section">
+      <h3 class="icons-heading">Click to share my excitment</h3>
+      <div class="icons-row">
+        <div class="big-icon-btn" onclick="triggerFireworks()" title="Fireworks!">
+          <div class="big-icon">🎆</div>
+          <div class="big-icon-label">Fireworks</div>
+        </div>
+        <div class="big-icon-btn" onclick="triggerConfetti()" title="Confetti!">
+          <div class="big-icon">🎊</div>
+          <div class="big-icon-label">Pop!</div>
+        </div>
+        <div class="big-icon-btn" onclick="triggerCapAnimation()" title="Throw caps!">
+          <div class="big-icon">🎓</div>
+          <div class="big-icon-label">Grad</div>
+        </div>
+        <div class="big-icon-btn" onclick="triggerCakeAnimation()" title="Birthday!">
+          <div class="big-icon">🎂</div>
+          <div class="big-icon-label">Birthday</div>
+        </div>
+        <div class="big-icon-btn" onclick="triggerMusicNote()" title="Turn up!">
+          <div class="big-icon">🎵</div>
+          <div class="big-icon-label">Party</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="rsvp-section" id="rsvpSection">
+      <div class="rsvp-card">
+        <div class="rsvp-header">
+          <span class="rsvp-eyebrow">— Don't leave me hanging —</span>
+          <h2 class="rsvp-title">Will You Be There?</h2>
+          <p class="rsvp-subtitle">Please RSVP by <strong>May 26, 2026</strong></p>
+        </div>
+
+        <div id="rsvpFormWrap">
+          <div class="rsvp-attending-btns">
+            <button class="attend-btn yes-btn" id="yesBtn" onclick="selectAttending('yes')">
+              <span class="attend-icon">/span> Hell Yes!
+            </button>
+            <button class="attend-btn no-btn" id="noBtn" onclick="selectAttending('no')">
+              <span class="attend-icon"></span> Can't Make It
+            </button>
+          </div>
+
+          <div class="rsvp-form" id="rsvpForm">
+            <div class="form-group">
+              <label class="form-label">Your Name</label>
+              <input type="text" class="form-input" id="rsvpName" placeholder="Full name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email / Phone</label>
+              <input type="text" class="form-input" id="rsvpContact" placeholder="So we can reach you" />
+            </div>
+            <div class="form-group" id="guestCountGroup" style="display:none;">
+              <label class="form-label">How many guests? (including yourself)</label>
+              <div class="guest-counter">
+                <button class="counter-btn" onclick="changeGuest(-1)">−</button>
+                <span class="guest-num" id="guestNum">1</span>
+                <button class="counter-btn" onclick="changeGuest(1)">+</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Drop a message 💬</label>
+              <textarea class="form-input form-textarea" id="rsvpMessage" placeholder="Hype, questions, dietary needs..."></textarea>
+            </div>
+            <button class="submit-rsvp-btn" onclick="submitRSVP()">
+              <span id="submitBtnText">Send RSVP ✦</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="rsvp-success" id="rsvpSuccess" style="display:none;">
+          <div class="success-icon">🎉</div>
+          <h3 class="success-title" id="successTitle">See you there!</h3>
+          <p class="success-msg" id="successMsg">We can't wait to celebrate with you. Get ready for a night to remember!</p>
+          <button class="submit-rsvp-btn" onclick="resetRSVP()" style="margin-top:1.5rem;">RSVP Again</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="invite-footer">
+      <div class="footer-deco">
+        <span class="deco-line"></span>
+        <span class="footer-icon">✦</span>
+        <span class="deco-line"></span>
+      </div>
+      <p class="footer-text">Made with love &amp; a lot of excitement<br/>See you on <strong>May 27th</strong> 🎓🎂</p>
+      <div class="footer-icons">🎓 &nbsp; 🎂 &nbsp; 🥂 &nbsp; 🎊 &nbsp; ✨</div>
+    </footer>
+
+  </main>
+
+  <!-- Burst overlay for animations -->
+  <div class="burst-overlay" id="burstOverlay"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
