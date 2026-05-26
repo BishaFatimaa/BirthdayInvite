@@ -117,4 +117,3 @@ The site is fully responsive. It works on phones and tablets.
 
 Made with ❤️ and a lot of 🥂
 # BirthdayInvite
-# BirthdayInvite
