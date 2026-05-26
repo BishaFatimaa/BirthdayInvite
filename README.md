@@ -6,4 +6,3 @@ A stunning animated party invitation website built with pure HTML, CSS & JavaScr
 **Party Date:** May 27, 2026 at 5:30 PM
 
 Made with ❤️ and a lot of 🥂
-# BirthdayInvite
