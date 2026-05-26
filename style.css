@@ -899,6 +899,55 @@ body {
 }
 
 /* ========================
+   GOOGLE FORM EMBED
+   ======================== */
+.gform-wrap {
+  margin-top: 0.5rem;
+}
+
+.gform-deco-top, .gform-deco-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.2rem 0;
+}
+
+.gform-deco-star {
+  color: var(--red);
+  font-size: 0.85rem;
+  animation: rotateStar 8s linear infinite;
+}
+
+.gform-frame-wrap {
+  position: relative;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(192,57,43,0.25);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), inset 0 0 60px rgba(192,57,43,0.03);
+  background: rgba(10,6,3,0.6);
+}
+
+.gform-frame-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red-deep), var(--red), var(--gold), var(--red), var(--red-deep));
+  z-index: 1;
+}
+
+.gform-iframe {
+  display: block;
+  width: 100%;
+  min-height: 680px;
+  border: none;
+  background: transparent;
+  /* Attempt to blend Google Form into theme — best-effort via filter */
+  filter: invert(1) hue-rotate(165deg) brightness(0.82) saturate(0.9) contrast(0.95);
+}
+
+/* ========================
    FOOTER
    ======================== */
 .invite-footer {
