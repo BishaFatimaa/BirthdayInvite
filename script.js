@@ -94,14 +94,18 @@ function openEnvelope() {
   wrapper.classList.add('opened');
   wrapper.style.cursor = 'default';
 
-  // After letter rises, show main content
+  // Letter starts rising at 0.4s, takes 0.9s — visible at ~1.3s
+  // Hold for 0.7s so user reads "You're Invited", then fade out at 2s
   setTimeout(() => {
     document.getElementById('envelopeSection').classList.add('gone');
+  }, 2000);
+
+  setTimeout(() => {
     const main = document.getElementById('inviteMain');
     main.classList.add('visible');
     triggerOpenBurst();
     createCountdown();
-  }, 1000);
+  }, 2400);
 }
 
 function triggerOpenBurst() {
@@ -312,68 +316,63 @@ function submitRSVP() {
   const message = document.getElementById('rsvpMessage').value.trim();
   const btnText = document.getElementById('submitBtnText');
 
-  if (!name) {
-    shakeInput(document.getElementById('rsvpName'));
-    return;
-  }
-  if (!attendingStatus) {
-    alert("Please select whether you're attending!");
-    return;
+  if (!name) { shakeInput(document.getElementById('rsvpName')); return; }
+  if (!attendingStatus) { alert("Please select whether you're attending!"); return; }
+
+  btnText.textContent = 'Sending... ✦';
+
+  // Submit silently to Google Forms via hidden iframe (no redirect, no Google blue)
+  const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSeknOXx34lrwbNjJtOWjDF79lo-LrQPNi8plAOVEDiXApl9xw/formResponse';
+
+  let iframe = document.getElementById('gform-hidden-iframe');
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id   = 'gform-hidden-iframe';
+    iframe.name = 'gform-hidden-iframe';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
   }
 
-  // Build the RSVP data object
-  const entry = {
-    name,
-    contact: contact || '(not provided)',
-    attending: attendingStatus === 'yes' ? 'YES' : 'NO',
-    guests: attendingStatus === 'yes' ? guestCount : 0,
-    message: message || '(no message)',
-    submitted_at: new Date().toLocaleString()
+  const hiddenForm = document.createElement('form');
+  hiddenForm.method = 'POST';
+  hiddenForm.action = FORM_ACTION;
+  hiddenForm.target = 'gform-hidden-iframe';
+  hiddenForm.style.display = 'none';
+
+  const fields = {
+    'entry.864570240':  name,
+    'entry.1924838062': contact,
+    'entry.195214263':  message,
+    'entry.1385304707': attendingStatus === 'yes' ? String(guestCount) : '0',
+    'entry.1283384436': attendingStatus === 'yes' ? 'Yes' : 'No',
   };
 
-  // Save to localStorage as backup
-  rsvpList.push(entry);
-  localStorage.setItem('rsvpList', JSON.stringify(rsvpList));
+  Object.entries(fields).forEach(([key, val]) => {
+    const input = document.createElement('input');
+    input.type  = 'hidden';
+    input.name  = key;
+    input.value = val;
+    hiddenForm.appendChild(input);
+  });
 
-  // Build email
-  const TO = 's.bishafatima@gmail.com'; // REPLACE WITH YOUR EMAIL
-  const subject = 'RSVP from ' + name + ' — Birthday & Grad Party';
-  const body = [
-    '🎓🎂 PARTY RSVP',
-    '================',
-    '',
-    'Name:      ' + entry.name,
-    'Contact:   ' + entry.contact,
-    'Attending: ' + entry.attending,
-    'Guests:    ' + entry.guests,
-    'Message:   ' + entry.message,
-    'Submitted: ' + entry.submitted_at,
-    '',
-    '--- RAW JSON ---',
-    JSON.stringify(entry, null, 2)
-  ].join('\n');
-
-  const mailto = 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-  window.location.href = mailto;
-
-  btnText.textContent = 'Opening mail... ✨';
+  document.body.appendChild(hiddenForm);
+  hiddenForm.submit();
+  document.body.removeChild(hiddenForm);
 
   setTimeout(() => {
     document.getElementById('rsvpFormWrap').style.display = 'none';
     const success = document.getElementById('rsvpSuccess');
     success.style.display = 'block';
-
     const title = document.getElementById('successTitle');
     const msg   = document.getElementById('successMsg');
-
     if (attendingStatus === 'yes') {
       title.textContent = 'See you there, ' + name + '! 🎉';
-      msg.textContent = 'Your mail app should have opened — just hit Send! We cannot wait to celebrate with you.';
+      msg.textContent   = "You're on the list! We can't wait to celebrate with you.";
       triggerFireworks();
       setTimeout(triggerConfetti, 600);
     } else {
       title.textContent = "We'll miss you, " + name + ' 😢';
-      msg.textContent = 'Your mail app should have opened — just hit Send. Thanks for letting us know!';
+      msg.textContent   = "Thanks for letting us know. You'll be missed!";
     }
     btnText.textContent = 'Send RSVP ✦';
   }, 800);
